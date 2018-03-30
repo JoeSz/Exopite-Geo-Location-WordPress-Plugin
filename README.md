@@ -15,6 +15,16 @@ DESCRIPTION
 
 This is more like a 10 min. proof of contept plugin.
 
+[exopite-geo-location service="service"]
+
+Services:
+* geoplugin
+* freegeoip
+* geobytes
+* ipapi
+* iplocate
+* default = ipdata
+
 Can be used with the following IP APIs, you can select them in the code.
 
 * http://www.geoplugin.net/json.gp?ip=[IP]
