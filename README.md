@@ -13,7 +13,28 @@ Display IP Lookup form and enetered IP geo location with [exopite-geo-location] 
 DESCRIPTION
 -----------
 
-Display IP Lookup form and enetered IP geo location with [exopite-geo-location] shortcode.
+This is more like a 10 min. proof of contept plugin.
+
+Can be used with the following IP APIs, you can select them in the code.
+
+* http://www.geoplugin.net/json.gp?ip=[IP]
+* http://freegeoip.net/json/[IP]
+* http://gd.geobytes.com/GetCityDetails?fqcn=[IP]
+* https://ipapi.co/[IP]/json/
+* https://api.ipdata.co/[IP]/
+* https://www.iplocate.io/api/lookup/[IP]/
+
+Returns if available:
+* City
+* State
+* Country Name
+* Country Code
+* Continent Name
+* Continent Code
+* Latitude
+* Longitude
+* Zip Code
+* Organisation
 
 INSTALLATION
 ------------
