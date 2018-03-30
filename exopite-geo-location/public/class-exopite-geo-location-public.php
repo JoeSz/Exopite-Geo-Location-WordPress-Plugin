@@ -447,7 +447,7 @@ class Exopite_Geo_Location_Public {
 
     }
 
-    public function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
+    public function ip_info( $ip = NULL, $service = "", $purpose = "location", $deep_detect = TRUE ) {
         $output = NULL;
 
         if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
@@ -474,12 +474,34 @@ class Exopite_Geo_Location_Public {
         if (filter_var($ip, FILTER_VALIDATE_IP) && in_array($purpose, $support)) {
 
             // https://ahmadawais.com/best-api-geolocating-an-ip-address/
-            // $output = $this->use_geoplugin( $ip, $purpose );
-            // $output = $this->use_freegeoip( $ip );
-            // $output = $this->use_geobytes( $ip );
-            // $output = $this->use_ipapi( $ip );
-            // $output = $this->use_iplocate( $ip );
-            $output = $this->use_ipdata( $ip );
+
+            switch ( $service ) {
+
+                case 'geoplugin':
+                    $output = $this->use_geoplugin( $ip, $purpose );
+                    break;
+
+                case 'freegeoip':
+                    $output = $this->use_freegeoip( $ip );
+                    break;
+
+                case 'geobytes':
+                    $output = $this->use_geobytes( $ip );
+                    break;
+
+                case 'ipapi':
+                    $output = $this->use_ipapi( $ip );
+                    break;
+
+                case 'iplocate':
+                    $output = $this->use_iplocate( $ip );
+                    break;
+
+                default:
+                    $output = $this->use_ipdata( $ip );
+                    break;
+
+            }
 
         }
         return $output;
@@ -487,8 +509,51 @@ class Exopite_Geo_Location_Public {
 
     public function exopite_geo_locate( $atts ) {
 
+        $args = shortcode_atts(
+            array(
+                'service' => 'service',
+            ),
+            $atts
+        );
+
+        $service = esc_attr( $args['service'] );
+
         $output = '';
         $result = '';
+
+        switch ( $service ) {
+
+            case 'geoplugin':
+                $api_link = '<a href="http://www.geoplugin.com/" target="_blank">geoplugin.com</a>';
+                $api_privacy_link = 'For Privacy Policy please visit site.';
+                break;
+
+            case 'freegeoip':
+                $api_link = '<a href="http://freegeoip.net" target="_blank">freegeoip.net</a>';
+                $api_privacy_link = 'For Privacy Policy please visit site.';
+                break;
+
+            case 'geobytes':
+                $api_link = '<a href="http://geobytes.com/" target="_blank">geobytes.com</a>';
+                $api_privacy_link = 'For Privacy Policy please visit site.';
+                break;
+
+            case 'ipapi':
+                $api_link = '<a href="https://ipapi.co/" target="_blank">ipapi.co</a>';
+                $api_privacy_link = '<a href="https://ipapi.co/privacy/" target="_blank">Privacy Policy for ipapi.co.</a>';
+                break;
+
+            case 'iplocate':
+                $api_link = '<a href="https://www.iplocate.io/" target="_blank">iplocate.io</a>';
+                $api_privacy_link = 'For Privacy Policy please visit site.';
+                break;
+
+            default:
+                $api_link = '<a href="https://ipdata.co" target="_blank">ipdata.co</a>';
+                $api_privacy_link = '<a href="https://ipdata.co/privacy.html" target="_blank">Privacy Policy for ipdata.co.</a>';
+                break;
+
+        }
 
         if ( isset( $_POST['get-location'] ) && ! empty( $_POST['ip-address'] ) ) {
 
@@ -498,7 +563,7 @@ class Exopite_Geo_Location_Public {
                $ip = $match['1'];
             }
 
-            $data = $this->ip_info( $ip );
+            $data = $this->ip_info( $ip, $service );
 
             $result .= '<div class="result-wrapper"><div class="row justify-content-center"><div class="col-12 col-xs-12 col-sm-4 col-md-3 col-lg-2">IP:</div><div class="col-12 col-xs-12 col-sm-6 col-md-4 col-lg-3">' . $ip . '</div></div>';
 
@@ -556,9 +621,13 @@ class Exopite_Geo_Location_Public {
             <div class="row"><div class="col-12 col-xs-12 text-center"><input type="submit" name="get-location" class="get-location-submit" value="<?php esc_html_e( 'Get Location', 'exopite-geo-location' ); ?>"></div></div>
 
         </form>
+        <?php echo $result; ?>
+        <div class="privacy-note">
+            <p>This page display your current IP address. It will not send your IP unless you click on "Get Location". We will not save or use in any form your IP address.<br><?php echo sprintf( 'This page uses %s to determinate Location from IP address. %s', $api_link, $api_privacy_link ); ?></p>
+        </div>
         <?php
 
-        $output .= ob_get_clean() . $result;
+        $output .= ob_get_clean();
 
         return $output;
     }
