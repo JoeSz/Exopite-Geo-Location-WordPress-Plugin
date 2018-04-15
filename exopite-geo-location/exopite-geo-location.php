@@ -16,7 +16,7 @@
  * Plugin Name:       Exopite Geo Location
  * Plugin URI:        https://joe.szalai.org/exopite/exopite-geo-location
  * Description:       Display IP Lookup form and enetered IP geo location with [exopite-geo-location] shortcode.
- * Version:           20180330
+ * Version:           20180415
  * Author:            Joe Szalai
  * Author URI:        https://joe.szalai.org
  * License:           GPL-2.0+
