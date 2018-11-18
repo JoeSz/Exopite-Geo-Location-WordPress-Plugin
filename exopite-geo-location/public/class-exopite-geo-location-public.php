@@ -77,6 +77,29 @@ class Exopite_Geo_Location_Public {
 
 	}
 
+    /**
+     * Register the JavaScript for the public-facing side of the site.
+     *
+     * @since    1.0.0
+     */
+    public function enqueue_scripts() {
+
+        /**
+         * This function is provided for demonstration purposes only.
+         *
+         * An instance of this class should be passed to the run() function
+         * defined in Exopite_Geo_Location_Loader as all of the hooks are defined
+         * in that particular class.
+         *
+         * The Exopite_Geo_Location_Loader will then create the relationship
+         * between the defined hooks and the functions defined in this
+         * class.
+         */
+
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/exopite-geo-location-public.js', array( 'jquery' ), $this->version, false );
+
+    }
+
     /*
      * Get user IP address
      */
