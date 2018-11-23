@@ -3,7 +3,7 @@
 Display IP Lookup form and enetered IP geo location with [exopite-geo-location] shortcode.
 
 - Author: Joe Szalai
-- Version: 20180415
+- Version: 20181123
 - Plugin URL: https://github.com/JoeSz/Exopite-Geo-Location-WordPress-Plugin
 - Demo URL: https://joe.szalai.org/ip-lookup/
 - Author URL: https://joe.szalai.org
@@ -74,8 +74,11 @@ Browsers
 CHANGELOG
 ---------
 
+= 20181123 =
+* Add plugin upgrade notification.
+
 = 20180415 =
-* Fix updateer location.
+* Fix updater location.
 
 = 20180330 =
 * Initial release.
