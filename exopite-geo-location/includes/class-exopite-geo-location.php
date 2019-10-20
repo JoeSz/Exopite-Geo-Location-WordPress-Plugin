@@ -67,8 +67,8 @@ class Exopite_Geo_Location {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'EXOPITE_GEO_LOCATION_VERSION' ) ) {
+			$this->version = EXOPITE_GEO_LOCATION_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -76,7 +76,6 @@ class Exopite_Geo_Location {
 
 		$this->load_dependencies();
 		$this->set_locale();
-		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
 	}
@@ -112,11 +111,6 @@ class Exopite_Geo_Location {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-exopite-geo-location-i18n.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-exopite-geo-location-admin.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -140,22 +134,6 @@ class Exopite_Geo_Location {
 		$plugin_i18n = new Exopite_Geo_Location_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
-	}
-
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_hooks() {
-
-		$plugin_admin = new Exopite_Geo_Location_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 	}
 
