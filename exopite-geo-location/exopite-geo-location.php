@@ -15,12 +15,12 @@
  * @wordpress-plugin
  * Plugin Name:       Exopite Geo Location
  * Plugin URI:        https://joe.szalai.org/exopite/exopite-geo-location
- * Description:       Display IP Lookup form and enetered IP geo location with [exopite-geo-location] shortcode.
- * Version:           20181123
+ * Description:       Display IP Lookup form and enetered IP geo location with [exopite-geo-locate] shortcode.
+ * Version:           20191020
  * Author:            Joe Szalai
  * Author URI:        https://joe.szalai.org
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       exopite-geo-location
  * Domain Path:       /languages
  */
@@ -35,31 +35,10 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'EXOPITE_GEO_LOCATION_VERSION', '20181123' );
+define( 'EXOPITE_GEO_LOCATION_VERSION', '20191020' );
 define( 'EXOPITE_GEO_LOCATION_PLUGIN_NAME', 'exopite-geo-location' );
 define( 'EXOPITE_GEO_LOCATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'EXOPITE_GEO_LOCATION_URL', plugin_dir_url( __FILE__ ) );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-exopite-geo-location-activator.php
- */
-function activate_exopite_geo_location() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-exopite-geo-location-activator.php';
-	Exopite_Geo_Location_Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-exopite-geo-location-deactivator.php
- */
-function deactivate_exopite_geo_location() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-exopite-geo-location-deactivator.php';
-	Exopite_Geo_Location_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_exopite_geo_location' );
-register_deactivation_hook( __FILE__, 'deactivate_exopite_geo_location' );
 
 /*
  * Update
