@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://joe.szalai.org
+ * @link              https://www.joeszalai.org
  * @since             1.0.0
  * @package           Exopite_Geo_Location
  *
  * @wordpress-plugin
  * Plugin Name:       Exopite Geo Location
- * Plugin URI:        https://joe.szalai.org/exopite/exopite-geo-location
+ * Plugin URI:        https://www.joeszalai.org/exopite/exopite-geo-location
  * Description:       Display IP Lookup form and enetered IP geo location with [exopite-geo-locate] shortcode.
  * Version:           20191020
  * Author:            Joe Szalai
- * Author URI:        https://joe.szalai.org
+ * Author URI:        https://www.joeszalai.org
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       exopite-geo-location

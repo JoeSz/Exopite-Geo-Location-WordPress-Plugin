@@ -5,8 +5,8 @@ Display IP Lookup form and enetered IP geo location with [exopite-geo-location] 
 - Author: Joe Szalai
 - Version: 20191020
 - Plugin URL: https://github.com/JoeSz/Exopite-Geo-Location-WordPress-Plugin
-- Demo URL: https://joe.szalai.org/ip-lookup/
-- Author URL: https://joe.szalai.org
+- Demo URL: https://www.joeszalai.org/ip-lookup/
+- Author URL: https://www.joeszalai.org
 - License: GNU General Public License v3 or later
 - License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
