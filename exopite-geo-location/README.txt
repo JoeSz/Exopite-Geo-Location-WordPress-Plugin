@@ -7,7 +7,7 @@ Stable tag: 4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Display frontend notifications thru hooks with lobibox (PHP & AJAX).
+Display IP Lookup form and enetered IP geo location with [exopite-geo-locate] shortcode.
 
 == Description ==
 

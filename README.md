@@ -1,6 +1,6 @@
 # Exopite Geo Location
 ## WordPress Plugin
-Display IP Lookup form and enetered IP geo location with [exopite-geo-location] shortcode.
+Display IP Lookup form and enetered IP geo location with [exopite-geo-locate] shortcode.
 
 - Author: Joe Szalai
 - Version: 20191020
