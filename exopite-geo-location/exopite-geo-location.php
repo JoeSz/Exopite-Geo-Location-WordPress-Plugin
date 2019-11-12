@@ -16,7 +16,7 @@
  * Plugin Name:       Exopite Geo Location
  * Plugin URI:        https://www.joeszalai.org/exopite/exopite-geo-location
  * Description:       Display IP Lookup form and enetered IP geo location with [exopite-geo-locate] shortcode.
- * Version:           20191020
+ * Version:           20191112
  * Author:            Joe Szalai
  * Author URI:        https://www.joeszalai.org
  * License:           GPL-3.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'EXOPITE_GEO_LOCATION_VERSION', '20191020' );
+define( 'EXOPITE_GEO_LOCATION_VERSION', '20191112' );
 define( 'EXOPITE_GEO_LOCATION_PLUGIN_NAME', 'exopite-geo-location' );
 define( 'EXOPITE_GEO_LOCATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'EXOPITE_GEO_LOCATION_URL', plugin_dir_url( __FILE__ ) );

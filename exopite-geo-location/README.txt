@@ -56,6 +56,9 @@ Returns if available:
 
 == Changelog ==
 
+= 20191112 =
+* Update Plugin Update Checker to 4.8
+
 = 20191020 =
 * Clean up (Remove admin interface)
 * Update license
