@@ -555,64 +555,87 @@ class Exopite_Geo_Location_Public {
 
         }
 
-        if ( isset( $_POST['get-location'] ) && ! empty( $_POST['ip-address'] ) ) {
+        if ( ( isset( $_POST['get-location'] ) && ! empty( $_POST['ip-address'] ) ) || isset( $_GET['getip'] ) ){
 
-            $ip = esc_attr( $_POST['ip-address'] );
-
-            if ( preg_match('/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\:?([0-9]{1,5})?/', $ip, $match ) ) {
-               $ip = $match['1'];
+            if ( isset( $_GET['getip'] ) ) {
+                $ip = esc_attr( $_GET['getip'] );
+            } elseif ( isset( $_POST['ip-address'] ) ) {
+                $ip = esc_attr( $_POST['ip-address'] );
             }
+
+            // if more then 1 : in ip, then it is ipv6
+            if ( strpos( $ip, ':' ) !== false && substr_count( $ip, ':' ) < 2 ) {
+                $ip = substr( $ip, 0, strpos( $ip, ":" ) );
+            }
+
+            if ( filter_var( $ip, FILTER_VALIDATE_IP ) === FALSE ) {
+                $ip = $this->get_ip_address();
+            }
+
+            // if ( preg_match('/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\:?([0-9]{1,5})?/', $ip, $match ) ) {
+            //    $ip = $match['1'];
+            // }
 
             $data = $this->ip_info( $ip, $service );
 
-            $result .= '<div class="result-wrapper"><div class="row justify-content-center"><div class="col-12 col-xs-12 col-sm-4 col-md-3 col-lg-2">IP:</div><div class="col-12 col-xs-12 col-sm-6 col-md-4 col-lg-3">' . $ip . '</div></div>';
+            // if ( isset( $_GET['api'] ) ) {
 
-            if ( ! empty( $data['country_code'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2"></div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3"><img src="' . EXOPITE_GEO_LOCATION_URL . '/public/css/blank.gif" class="flag flag-' . strtolower( $data['country_code'] ) . '" alt="' . $data['country_name'] . '" /></div></div>';
-            }
+            //     return json_encode( $data );
 
-            if ( ! empty( $data['city'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">City:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['city'] . '</div></div>';
-            }
-            if ( ! empty( $data['state'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">State:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['state'] . '</div></div>';
-            }
-            if ( ! empty( $data['country_name'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Country Name:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['country_name'] . '</div></div>';
-            }
-            if ( ! empty( $data['country_code'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Country Code:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['country_code'] . '</div></div>';
-            }
-            if ( ! empty( $data['zip_code'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">ZIP Code:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['zip_code'] . '</div></div>';
-            }
-            if ( ! empty( $data['continent'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Continent:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['continent'] . '</div></div>';
-            }
-            if ( ! empty( $data['latitude'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Latitude:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['latitude'] . '</div></div>';
-            }
-            if ( ! empty( $data['longitude'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Longitude:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['longitude'] . '</div></div>';
-            }
-            if ( ! empty( $data['org'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Organization:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['org'] . '</div></div>';
-            }
-            if ( ! empty( $data['latitude'] ) && ! empty( $data['longitude'] ) ) {
-                $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2"></div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">
-                <a href="https://www.google.de/maps/place/' . $data['latitude'] . ',' . $data['longitude'] . '">Google Maps</a><br>
-                <a href="https://www.bing.com/maps?cp=' . $data['latitude'] . '~' . $data['longitude'] . '">Bing Maps</a>
-                <a href="https://www.openstreetmap.org/#map=14/' . $data['latitude'] . '/' . $data['longitude'] . '">OpenStreetMap.Org</a>
-                </div></div>';
-            }
+            // } else {
 
-            $result .= '</div>';
+                $result .= '<div class="result-wrapper"><div class="row justify-content-center"><div class="col-12 col-xs-12 col-sm-4 col-md-3 col-lg-2">IP:</div><div class="col-12 col-xs-12 col-sm-6 col-md-4 col-lg-3">' . $ip . '</div></div>';
+
+                if ( ! empty( $data['country_code'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2"></div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3"><img src="' . EXOPITE_GEO_LOCATION_URL . '/public/css/blank.gif" class="flag flag-' . strtolower( $data['country_code'] ) . '" alt="' . $data['country_name'] . '" /></div></div>';
+                }
+
+                if ( ! empty( $data['city'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">City:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['city'] . '</div></div>';
+                }
+                if ( ! empty( $data['state'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">State:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['state'] . '</div></div>';
+                }
+                if ( ! empty( $data['country_name'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Country Name:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['country_name'] . '</div></div>';
+                }
+                if ( ! empty( $data['country_code'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Country Code:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['country_code'] . '</div></div>';
+                }
+                if ( ! empty( $data['zip_code'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">ZIP Code:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['zip_code'] . '</div></div>';
+                }
+                if ( ! empty( $data['continent'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Continent:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['continent'] . '</div></div>';
+                }
+                if ( ! empty( $data['latitude'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Latitude:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['latitude'] . '</div></div>';
+                }
+                if ( ! empty( $data['longitude'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Longitude:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['longitude'] . '</div></div>';
+                }
+                if ( ! empty( $data['org'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">Organization:</div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">' . $data['org'] . '</div></div>';
+                }
+                if ( ! empty( $data['latitude'] ) && ! empty( $data['longitude'] ) ) {
+                    $result .= '<div class="row justify-content-center"><div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2"></div><div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <a href="https://www.google.de/maps/place/' . $data['latitude'] . ',' . $data['longitude'] . '">Google Maps</a><br>
+                    <a href="https://www.bing.com/maps?cp=' . $data['latitude'] . '~' . $data['longitude'] . '">Bing Maps</a>
+                    <a href="https://www.openstreetmap.org/#map=14/' . $data['latitude'] . '/' . $data['longitude'] . '">OpenStreetMap.Org</a>
+                    </div></div>';
+                }
+
+                $result .= '</div>';
+
+            // }
+
+
 
         }
 
         ob_start( );
 
-        $ip_to_show = ( isset( $_POST['ip-address'] ) ) ? $ip : $this->get_ip_address();
+        $ip_to_show = ( isset( $ip ) ) ? $ip : $this->get_ip_address();
 
         ?>
         <form method="post" class="ip-lookup-form">
@@ -630,6 +653,8 @@ class Exopite_Geo_Location_Public {
         $output .= ob_get_clean();
 
         return $output;
+
+
     }
 
 }
